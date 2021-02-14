@@ -16,12 +16,12 @@ jobs:
       with:
         dotnet-version: 3.1.404
     - name: Create NuGet Package
-      run: dotnet pack -c Release /p:Version=${{ github.event.release.tag_name }} /p:PackageReleaseNotes="See https://github.com/AspNetMonsters/AzureFunctions.OidcAuthentication/releases/tag/${{ github.event.release.tag_name }}"
+      run: dotnet pack -c Release /p:Version=${{ github.event.release.tag_name }} /p:PackageReleaseNotes="See https://github.com/fmichellonet/AzureFunctions.Extensions.OpenIDConnect/releases/tag/${{ github.event.release.tag_name }}"
       working-directory: .\src
     - name: Archive NuGet Package
       uses: actions/upload-artifact@v1
       with:
-        name: AzureFunctions.OidcAuthentication.${{ github.event.release.tag_name }}.nupkg
-        path: .\src\bin\Release\AzureFunctions.OidcAuthentication.${{ github.event.release.tag_name }}.nupkg
+        name: AzureFunctions.Extensions.OpenIDConnect.${{ github.event.release.tag_name }}.nupkg
+        path: .\src\bin\Release\AzureFunctions.Extensions.OpenIDConnect.${{ github.event.release.tag_name }}.nupkg
     - name: Publish to Nuget.org
-      run: dotnet nuget push .\src\bin\Release\AzureFunctions.OidcAuthentication.${{ github.event.release.tag_name }}.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+      run: dotnet nuget push .\src\bin\Release\AzureFunctions.Extensions.OpenIDConnect.${{ github.event.release.tag_name }}.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
