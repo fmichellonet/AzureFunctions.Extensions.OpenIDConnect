@@ -22,6 +22,6 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: AzureFunctions.Extensions.OpenIDConnect.${{ github.event.release.tag_name }}.nupkg
-        path: .\src\bin\Release\AzureFunctions.Extensions.OpenIDConnect.${{ github.event.release.tag_name }}.nupkg
+        path: .\src\AzureFunctions.Extensions.OpenIDConnect\bin\Release\AzureFunctions.Extensions.OpenIDConnect.${{ github.event.release.tag_name }}.nupkg
     - name: Publish to Nuget.org
       run: dotnet nuget push .\src\AzureFunctions.Extensions.OpenIDConnect\bin\Release\AzureFunctions.Extensions.OpenIDConnect.${{ github.event.release.tag_name }}.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
