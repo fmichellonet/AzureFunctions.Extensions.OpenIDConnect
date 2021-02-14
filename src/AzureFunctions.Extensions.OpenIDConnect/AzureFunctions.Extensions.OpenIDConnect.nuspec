@@ -7,11 +7,11 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
     <description>$description$</description>
-    <tags>Azure Functions;Token Validation;JWT;OIDC;Auth0;Azure AD B2C;Azure AD;Okta</tags>
+    <tags>Azure Functions;Token Validation;JWT;OIDC;Auth0;Azure AD B2C;Azure AD;Okta;Google</tags>
     <icon>images\icon.png</icon>
     <releaseNotes>$releaseNotes$</releaseNotes>
-    <projectUrl>https://github.com/AspNetMonsters/AzureFunctions.OidcAuthentication</projectUrl>
-    <repository type="git" url="git://github.com/AspNetMonsters/AzureFunctions.OidcAuthentication" />
+    <projectUrl>https://github.com/fmichellonet/AzureFunctions.Extensions.OpenIDConnect</projectUrl>
+    <repository type="git" url="https://github.com/fmichellonet/AzureFunctions.Extensions.OpenIDConnect.git" />
     <dependencies>
       <group targetFramework="netstandard2.0">
         <dependency id="Microsoft.AspNetCore.Http.Features" version="3.1.8" exclude="Build,Analyzers" />
