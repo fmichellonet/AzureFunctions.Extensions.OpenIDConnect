@@ -13,31 +13,18 @@
     /// </summary>
     internal class ApiAuthenticationService : IApiAuthentication
     {
+        private readonly TokenValidationParameters _tokenValidationParameters;
         private readonly IAuthorizationHeaderBearerTokenExtractor _authorizationHeaderBearerTokenExractor;
-
         private readonly IJwtSecurityTokenHandlerWrapper _jwtSecurityTokenHandlerWrapper;
-
         private readonly IOidcConfigurationManager _oidcConfigurationManager;
-
-        private readonly string _issuerUrl;
-        private readonly string _issuer;
-        private readonly string _audience;
-
-        private readonly string _nameClaimType;
-        private readonly string _roleClaimType;
-
+        
         public ApiAuthenticationService(
-            IOptions<OidcApiAuthSettings> apiAuthorizationSettingsOptions,
+            TokenValidationParameters tokenValidationParameters,
             IAuthorizationHeaderBearerTokenExtractor authorizationHeaderBearerTokenExractor,
             IJwtSecurityTokenHandlerWrapper jwtSecurityTokenHandlerWrapper,
             IOidcConfigurationManager oidcConfigurationManager)
         {
-            _issuerUrl = apiAuthorizationSettingsOptions?.Value?.IssuerUrl;
-            _issuer = apiAuthorizationSettingsOptions?.Value?.Issuer ?? _issuerUrl;
-            _audience = apiAuthorizationSettingsOptions?.Value?.Audience;
-            _nameClaimType = apiAuthorizationSettingsOptions?.Value?.NameClaimType ??  "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier";
-            _roleClaimType = apiAuthorizationSettingsOptions?.Value?.RoleClaimType ?? "http://schemas.microsoft.com/ws/2008/06/identity/claims/roleidentifier";
-
+            _tokenValidationParameters = tokenValidationParameters;
             _authorizationHeaderBearerTokenExractor = authorizationHeaderBearerTokenExractor;
 
             _jwtSecurityTokenHandlerWrapper = jwtSecurityTokenHandlerWrapper;
@@ -92,25 +79,12 @@
                 try
                 {
                     // Try to validate the token.
+                    
 
-                    var tokenValidationParameters = new TokenValidationParameters
-                    {
-                        RequireSignedTokens = true,
-                        ValidAudience = _audience,
-                        ValidateAudience = true,
-                        ValidIssuer = _issuer,
-                        ValidateIssuer = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidateLifetime = true,
-                        IssuerSigningKeys = isserSigningKeys,
-                        NameClaimType = _nameClaimType,
-                        RoleClaimType = _roleClaimType
-                    };
+                    _tokenValidationParameters.IssuerSigningKeys = isserSigningKeys;
 
                     // Throws if the the token cannot be validated.
-                    principal = _jwtSecurityTokenHandlerWrapper.ValidateToken(
-                        authorizationBearerToken,
-                        tokenValidationParameters);
+                    principal = _jwtSecurityTokenHandlerWrapper.ValidateToken(authorizationBearerToken,_tokenValidationParameters);
 
                     isTokenValid = true;
                 }
