@@ -9,14 +9,14 @@ namespace AzureFunctions.Extensions.OpenIDConnect
     using Microsoft.IdentityModel.Protocols.OpenIdConnect;
     using Microsoft.IdentityModel.Tokens;
 
-    internal class OidcConfigurationManager : IOidcConfigurationManager
+    internal class OpenIdConnectConfigurationManager : IOpenIdConnectConfigurationManager
     {
         private readonly ConfigurationManager<OpenIdConnectConfiguration> _configurationManager;
 
         /// <summary>
         /// Construct a ConfigurationManager instance for retreiving and caching OpenIdConnectConfiguration
         /// </summary>
-        public OidcConfigurationManager(ConfigurationManagerSettings settings)
+        public OpenIdConnectConfigurationManager(ConfigurationManagerSettings settings)
         {
             // Setup the ConfigurationManager to call the issuer (e.g. Auth0) of the signing keys.
             // The ConfigurationManager caches the configuration it receives from the OpenID Connect
@@ -45,8 +45,7 @@ namespace AzureFunctions.Extensions.OpenIDConnect
         /// </returns>
         public async Task<IEnumerable<SecurityKey>> GetIssuerSigningKeysAsync()
         {
-            OpenIdConnectConfiguration configuration = await _configurationManager.GetConfigurationAsync(
-                CancellationToken.None);
+            OpenIdConnectConfiguration configuration = await _configurationManager.GetConfigurationAsync(CancellationToken.None);
 
             return configuration.SigningKeys;
         }

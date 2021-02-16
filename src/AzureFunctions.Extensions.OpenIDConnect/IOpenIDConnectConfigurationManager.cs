@@ -4,7 +4,7 @@
     using System.Threading.Tasks;
     using Microsoft.IdentityModel.Tokens;
 
-    internal interface IOidcConfigurationManager
+    internal interface IOpenIdConnectConfigurationManager
     {
         /// <summary>
         /// Returns the cached signing keys if they were retrieved previously.

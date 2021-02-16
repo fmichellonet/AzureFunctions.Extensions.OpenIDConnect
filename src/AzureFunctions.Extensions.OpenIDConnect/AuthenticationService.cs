@@ -5,31 +5,30 @@
     using System.Security.Claims;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.Tokens;
 
     /// <summary>
     /// Encapsulates checks of bearer tokens in HTTP request headers.
     /// </summary>
-    internal class ApiAuthenticationService : IApiAuthentication
+    internal class AuthenticationService : IAuthenticationService
     {
         private readonly TokenValidationParameters _tokenValidationParameters;
         private readonly IAuthorizationHeaderBearerTokenExtractor _authorizationHeaderBearerTokenExractor;
         private readonly IJwtSecurityTokenHandlerWrapper _jwtSecurityTokenHandlerWrapper;
-        private readonly IOidcConfigurationManager _oidcConfigurationManager;
+        private readonly IOpenIdConnectConfigurationManager _openIdConnectConfigurationManager;
         
-        public ApiAuthenticationService(
+        public AuthenticationService(
             TokenValidationParameters tokenValidationParameters,
             IAuthorizationHeaderBearerTokenExtractor authorizationHeaderBearerTokenExractor,
             IJwtSecurityTokenHandlerWrapper jwtSecurityTokenHandlerWrapper,
-            IOidcConfigurationManager oidcConfigurationManager)
+            IOpenIdConnectConfigurationManager openIdConnectConfigurationManager)
         {
             _tokenValidationParameters = tokenValidationParameters;
             _authorizationHeaderBearerTokenExractor = authorizationHeaderBearerTokenExractor;
 
             _jwtSecurityTokenHandlerWrapper = jwtSecurityTokenHandlerWrapper;
 
-            _oidcConfigurationManager = oidcConfigurationManager;
+            _openIdConnectConfigurationManager = openIdConnectConfigurationManager;
         }
 
         /// <summary>
@@ -44,12 +43,11 @@
         public async Task<ApiAuthenticationResult> AuthenticateAsync(
             IHeaderDictionary httpRequestHeaders)
         {
-            bool isTokenValid = false;
+            var isTokenValid = false;
             ClaimsPrincipal principal = new ClaimsPrincipal();
 
-            string authorizationBearerToken = _authorizationHeaderBearerTokenExractor.GetToken(
-                httpRequestHeaders);
-            if (authorizationBearerToken == null)
+            var bearerToken = _authorizationHeaderBearerTokenExractor.GetToken(httpRequestHeaders);
+            if (bearerToken == null)
             {
                 return new ApiAuthenticationResult(principal,
                     "Authorization header is missing, invalid format, or is not a Bearer token.");
@@ -67,7 +65,7 @@
                     // then a fresh set of signing keys are retrieved from the OpenID Connect provider
                     // (issuer) cached and returned.
                     // This method will throw if the configuration cannot be retrieved, instead of returning null.
-                    isserSigningKeys = await _oidcConfigurationManager.GetIssuerSigningKeysAsync();
+                    isserSigningKeys = await _openIdConnectConfigurationManager.GetIssuerSigningKeysAsync();
                 }
                 catch (Exception ex)
                 {
@@ -84,7 +82,7 @@
                     _tokenValidationParameters.IssuerSigningKeys = isserSigningKeys;
 
                     // Throws if the the token cannot be validated.
-                    principal = _jwtSecurityTokenHandlerWrapper.ValidateToken(authorizationBearerToken,_tokenValidationParameters);
+                    principal = _jwtSecurityTokenHandlerWrapper.ValidateToken(bearerToken,_tokenValidationParameters);
 
                     isTokenValid = true;
                 }
@@ -98,7 +96,7 @@
                     // Then we retry by asking for the signing keys and validating the token again.
                     // We only retry once.
 
-                    _oidcConfigurationManager.RequestRefresh();
+                    _openIdConnectConfigurationManager.RequestRefresh();
 
                     validationRetryCount++;
                 }
