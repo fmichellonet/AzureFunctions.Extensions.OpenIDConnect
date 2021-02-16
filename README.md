@@ -21,7 +21,7 @@ Add AzureFunctions.Extensions.OpenIDConnect NuGet package to your Azure Function
 
 Now head over the Configure method of the Startup class, add configure OpenID-Connect the way you like it.
 
-```
+```csharp
 namespace MySecuredApp
 {
     public class Startup : FunctionsStartup
@@ -44,7 +44,7 @@ namespace MySecuredApp
 ### Securing an Azure Function
 Not that everything is configured, you can decorate your http-triggered functions with the well known [Authorize](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authorization.authorizeattribute?view=aspnetcore-3.1) attribute as follows:
 
-```
+```csharp
 namespace MySecuredApp
 {
     public class MyFunction
