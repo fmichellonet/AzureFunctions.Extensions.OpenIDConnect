@@ -1,7 +1,7 @@
 # AzureFunctions.Extensions.OpenIDConnect
 [![Build status](https://github.com/fmichellonet/AzureFunctions.Extensions.OpenIDConnect/workflows/Continuous%20Integration/badge.svg)](https://github.com/fmichellonet/AzureFunctions.Extensions.OpenIDConnect/actions?query=workflow%3A%22Continuous+Integration%22) [![NuGet Badge](https://buildstats.info/nuget/AzureFunctions.Extensions.OpenIDConnect)](https://www.nuget.org/packages/AzureFunctions.Extensions.OpenIDConnect/)
 
-> This project is originally forked from https://github.com/AspNetMonsters/AzureFunctions.OidcAuthentication. Thanks goes to [David Paquette](https://github.com/dpaquette) the helpful intial codebase.
+> This project is originally forked from https://github.com/AspNetMonsters/AzureFunctions.OidcAuthentication. Thanks goes to [David Paquette](https://github.com/dpaquette) for the helpful intial codebase.
 
 
 ## Why?
