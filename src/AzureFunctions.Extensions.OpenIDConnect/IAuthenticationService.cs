@@ -3,7 +3,7 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
 
-    public interface IApiAuthentication
+    public interface IAuthenticationService
     {
         Task<ApiAuthenticationResult> AuthenticateAsync(IHeaderDictionary httpRequestHeaders);
     }

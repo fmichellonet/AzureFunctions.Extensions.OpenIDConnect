@@ -1,36 +1,23 @@
-﻿namespace AzureFunctions.Extensions.OpenIDConnect
+﻿using AzureFunctions.Extensions.OpenIDConnect.Configuration;
+
+namespace AzureFunctions.Extensions.OpenIDConnect
 {
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.Protocols;
     using Microsoft.IdentityModel.Protocols.OpenIdConnect;
     using Microsoft.IdentityModel.Tokens;
 
-    internal class OidcConfigurationManager : IOidcConfigurationManager
+    internal class OpenIdConnectConfigurationManager : IOpenIdConnectConfigurationManager
     {
         private readonly ConfigurationManager<OpenIdConnectConfiguration> _configurationManager;
 
         /// <summary>
         /// Construct a ConfigurationManager instance for retreiving and caching OpenIdConnectConfiguration
-        /// from an Open ID Connect provider (issuer)
         /// </summary>
-        public OidcConfigurationManager(
-            IOptions<OidcApiAuthSettings> settingsOptions)
+        public OpenIdConnectConfigurationManager(ConfigurationManagerSettings settings)
         {
-            string issuerUrl = settingsOptions.Value.IssuerUrl;
-            string metadataAddress = settingsOptions.Value.MetadataAddress;
-
-            if (string.IsNullOrEmpty(metadataAddress)) {
-                metadataAddress = $"{issuerUrl}.well-known/openid-configuration";
-            }
-
-            var documentRetriever = new HttpDocumentRetriever
-            {
-                RequireHttps = metadataAddress.StartsWith("https://")
-            };
-
             // Setup the ConfigurationManager to call the issuer (e.g. Auth0) of the signing keys.
             // The ConfigurationManager caches the configuration it receives from the OpenID Connect
             // provider (issuer) in order to reduce the number or requests to that provider.
@@ -38,9 +25,12 @@
             // The configuration is not retrieved from the OpenID Connect provider until the first time
             // the ConfigurationManager.GetConfigurationAsync() is called below.
             _configurationManager = new ConfigurationManager<OpenIdConnectConfiguration>(
-                metadataAddress,
+                settings.MetadataAddress.ToString(),
                 new OpenIdConnectConfigurationRetriever(),
-                documentRetriever
+                new HttpDocumentRetriever
+                {
+                    RequireHttps = settings.MetadataAddress.Scheme == "https"
+                }
             );
         }
 
@@ -55,8 +45,7 @@
         /// </returns>
         public async Task<IEnumerable<SecurityKey>> GetIssuerSigningKeysAsync()
         {
-            OpenIdConnectConfiguration configuration = await _configurationManager.GetConfigurationAsync(
-                CancellationToken.None);
+            OpenIdConnectConfiguration configuration = await _configurationManager.GetConfigurationAsync(CancellationToken.None);
 
             return configuration.SigningKeys;
         }
