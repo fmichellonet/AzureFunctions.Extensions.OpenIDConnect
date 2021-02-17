@@ -8,20 +8,30 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.Azure.WebJobs;
 
+    public interface IFunctionsTypeCrawler
+    {
+        IEnumerable<Type> GetTypes();
+    }
+
+    public class AppDomainFunctionsTypeCrawler : IFunctionsTypeCrawler
+    {
+        public IEnumerable<Type> GetTypes()
+        {
+            return AppDomain.CurrentDomain
+                .GetAssemblies()
+                .Where(a => !a.IsDynamic)
+                .SelectMany(x => x.GetTypes());
+        }
+    }
+
     public class RouteGuardian : IRouteGuardian
     {
 
         private readonly Dictionary<string, AuthorizeAttribute> _routeProtection;
-
-        public RouteGuardian()
+        
+        public RouteGuardian(IFunctionsTypeCrawler typeCrawler)
         {
-            var types = AppDomain.CurrentDomain
-                                 .GetAssemblies()
-                                 .Where(a => !a.IsDynamic)
-                                 .SelectMany(x => x.GetTypes());
-
-
-            var httpTriggerMethods = types.SelectMany(type => type.GetMethods()
+            var httpTriggerMethods = typeCrawler.GetTypes().SelectMany(type => type.GetMethods()
                 .Where(
                     methodInfo => methodInfo.IsPublic && methodInfo.GetCustomAttributes<FunctionNameAttribute>().Any() &&
                     methodInfo.GetParameters().Any(paramInfo => paramInfo.GetCustomAttributes<HttpTriggerAttribute>().Any())

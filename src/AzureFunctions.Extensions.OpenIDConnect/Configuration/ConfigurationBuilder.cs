@@ -15,6 +15,9 @@ namespace AzureFunctions.Extensions.OpenIDConnect.Configuration
         internal ConfigurationBuilder(IServiceCollection services)
         {
             _services = services;
+
+            // register default services.
+            _services.AddSingleton<IFunctionsTypeCrawler, AppDomainFunctionsTypeCrawler>();
         }
 
         public void SetTokenValidation(string audience, string issuer)
