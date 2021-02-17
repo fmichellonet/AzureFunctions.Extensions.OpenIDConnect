@@ -3,6 +3,8 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace AzureFunctions.Extensions.OpenIDConnect.Configuration
 {
+    using System;
+    using System.Collections.Generic;
 
     public class ConfigurationBuilder
     {
@@ -16,8 +18,8 @@ namespace AzureFunctions.Extensions.OpenIDConnect.Configuration
         {
             _services = services;
 
-            // register default services.
-            _services.AddSingleton<IFunctionsTypeCrawler, AppDomainFunctionsTypeCrawler>();
+            // defaulting
+            SetTypeCrawler(RouteGuardian.AppDomainTypeCrawler);
         }
 
         public void SetTokenValidation(string audience, string issuer)
@@ -45,6 +47,11 @@ namespace AzureFunctions.Extensions.OpenIDConnect.Configuration
         {
             _services.AddSingleton(settings);
             _hasConfigurationManagerSettings = true;
+        }
+
+        public void SetTypeCrawler(Func<IEnumerable<Type>> functionTypeCrawler)
+        {
+            _services.AddSingleton<FunctionTypeCrawler>(() => functionTypeCrawler());
         }
     }
 }
