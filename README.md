@@ -55,7 +55,7 @@ namespace MySecuredApp
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-            string responseMessage = $"Hello, {name}. This HTTP triggered function is protected.";
+            string responseMessage = $"Hello. This HTTP triggered function is protected.";
 
             return new OkObjectResult(responseMessage);
         }
