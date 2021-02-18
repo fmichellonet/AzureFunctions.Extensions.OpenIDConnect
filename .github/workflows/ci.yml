@@ -23,9 +23,11 @@ jobs:
     # restore dependencies  
     - name: Install dependencies
       run: dotnet restore
+      working-directory: .\src
     # build
-    - name: Build with dotnet
-      run: dotnet build --configuration Release
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
       working-directory: .\src
     - name: Test
       run: dotnet test --no-restore --no-build
+      working-directory: .\src
