@@ -29,5 +29,5 @@ jobs:
       run: dotnet build --no-restore --configuration Release
       working-directory: .\src
     - name: Test
-      run: dotnet test --no-restore --no-build
+      run: dotnet test
       working-directory: .\src
