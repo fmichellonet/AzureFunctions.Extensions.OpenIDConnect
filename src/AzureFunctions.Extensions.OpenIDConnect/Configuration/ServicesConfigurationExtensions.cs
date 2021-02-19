@@ -44,7 +44,7 @@
             services.AddSingleton<IJwtSecurityTokenHandlerWrapper, JwtSecurityTokenHandlerWrapper>();
             services.AddSingleton<IOpenIdConnectConfigurationManager, OpenIdConnectConfigurationManager>();
             services.AddSingleton<IAuthenticationService, AuthenticationService>();
-            services.AddSingleton<IRouteGuardian, RouteGuardian>();
+            services.AddSingleton<RouteGuardian>();
             services.AddSingleton<IFunctionFilter, AuthorizeFilter>();
         }
     }

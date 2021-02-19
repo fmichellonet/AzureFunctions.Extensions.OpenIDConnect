@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureFunctions.Extensions.OpenIDConnect", "AzureFunctions.Extensions.OpenIDConnect/AzureFunctions.Extensions.OpenIDConnect.csproj", "{72379104-48F7-4A31-9946-C36C573D4563}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureFunctions.Extensions.OpenIDConnect", "AzureFunctions.Extensions.OpenIDConnect\AzureFunctions.Extensions.OpenIDConnect.csproj", "{72379104-48F7-4A31-9946-C36C573D4563}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureFunctions.Extensions.OpenIDConnect.Tests", "AzureFunctions.Extensions.OpenIDConnect.Tests\AzureFunctions.Extensions.OpenIDConnect.Tests.csproj", "{09F7B354-FEB9-4A08-8292-234ACD7C679C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{72379104-48F7-4A31-9946-C36C573D4563}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72379104-48F7-4A31-9946-C36C573D4563}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72379104-48F7-4A31-9946-C36C573D4563}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09F7B354-FEB9-4A08-8292-234ACD7C679C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09F7B354-FEB9-4A08-8292-234ACD7C679C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09F7B354-FEB9-4A08-8292-234ACD7C679C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09F7B354-FEB9-4A08-8292-234ACD7C679C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -20,9 +20,14 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.404
-    - name: Build with dotnet
-      run: dotnet build --configuration Release
+    # restore dependencies  
+    - name: Install dependencies
+      run: dotnet restore
       working-directory: .\src
-    # - name: Test
-    #   run: dotnet test
-    #   working-directory: .\src
+    # build
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
+      working-directory: .\src
+    - name: Test
+      run: dotnet test
+      working-directory: .\src
