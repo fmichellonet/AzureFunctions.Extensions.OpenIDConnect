@@ -13,7 +13,7 @@ namespace AzureFunctions.Extensions.OpenIDConnect.Tests
         [Test]
         public void Be_Resolvable()
         {
-            var collection = new ServiceCollection();
+            var collection = ServiceCollectionFixture.MinimalAzFunctionsServices();
             collection.AddOpenIDConnect(builder =>
             {
                 builder.SetIssuerBaseUrlConfiguration("https://issuer.com/");

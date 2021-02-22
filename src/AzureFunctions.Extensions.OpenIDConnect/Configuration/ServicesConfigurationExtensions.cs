@@ -1,4 +1,6 @@
-﻿namespace AzureFunctions.Extensions.OpenIDConnect.Configuration
+﻿using Microsoft.AspNetCore.Authorization;
+
+namespace AzureFunctions.Extensions.OpenIDConnect.Configuration
 {
     using System;
     using Microsoft.Azure.WebJobs.Host;
@@ -46,6 +48,8 @@
             services.AddSingleton<IAuthenticationService, AuthenticationService>();
             services.AddSingleton<IRouteGuardian, RouteGuardian>();
             services.AddSingleton<IFunctionFilter, AuthorizeFilter>();
+            services.AddSingleton<IAuthorizationService, DefaultAuthorizationService>();
+            services.AddSingleton<IAuthorizationPolicyProvider, DefaultAuthorizationPolicyProvider>();
         }
     }
 }

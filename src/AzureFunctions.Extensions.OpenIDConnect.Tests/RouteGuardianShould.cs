@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,65 +16,65 @@ namespace AzureFunctions.Extensions.OpenIDConnect.Tests
     public class RouteGuardianShould
     {
         [Test]
-        public async Task Not_Authorize_When_Not_HttpTrigger()
+        public void Not_Authorize_When_Not_HttpTrigger()
         {
             // Arrange
             var guardian = new RouteGuardian(() => new List<Type>{ typeof(Not_HttpTrigger) });
 
             // Act
-            var result = await guardian.ShouldAuthorize("Not_HttpTrigger");
+            var result = guardian.IsProtectedRoute("Not_HttpTrigger");
 
             // Assert
             result.Should().Be(false);
         }
 
         [Test]
-        public async Task Not_Authorize_When_No_Authorize_Attribute_On_Method_And_Type()
+        public void Not_Authorize_When_No_Authorize_Attribute_On_Method_And_Type()
         {
             // Arrange
             var guardian = new RouteGuardian(() => new List<Type> { typeof(No_Authorize_Attribute_On_Method_And_Type) });
 
             // Act
-            var result = await guardian.ShouldAuthorize("No_Authorize_Attribute_On_Method_And_Type");
+            var result = guardian.IsProtectedRoute("No_Authorize_Attribute_On_Method_And_Type");
 
             // Assert
             result.Should().Be(false);
         }
 
         [Test]
-        public async Task Authorize_When_Authorize_Attribute_Is_On_Method()
+        public void Authorize_When_Authorize_Attribute_Is_On_Method()
         {
             // Arrange
             var guardian = new RouteGuardian(() => new List<Type> { typeof(Authorize_Attribute_Is_On_Method) });
 
             // Act
-            var result = await guardian.ShouldAuthorize("Authorize_Attribute_Is_On_Method");
+            var result = guardian.IsProtectedRoute("Authorize_Attribute_Is_On_Method");
 
             // Assert
             result.Should().Be(true);
         }
 
         [Test]
-        public async Task Authorize_When_Authorize_Attribute_Is_On_Class()
+        public void Authorize_When_Authorize_Attribute_Is_On_Class()
         {
             // Arrange
             var guardian = new RouteGuardian(() => new List<Type> { typeof(Authorize_Attribute_Is_On_Class) });
 
             // Act
-            var result = await guardian.ShouldAuthorize("Authorize_Attribute_Is_On_Class");
+            var result = guardian.IsProtectedRoute("Authorize_Attribute_Is_On_Class");
 
             // Assert
             result.Should().Be(true);
         }
 
         [Test]
-        public async Task NotAuthorize_When_Authorize_Attribute_Is_On_Class_But_AllowAnonimous_On_Method()
+        public void NotAuthorize_When_Authorize_Attribute_Is_On_Class_But_AllowAnonimous_On_Method()
         {
             // Arrange
             var guardian = new RouteGuardian(() => new List<Type> { typeof(Attribute_Is_On_Class_But_AllowAnonimous_On_Method) });
 
             // Act
-            var result = await guardian.ShouldAuthorize("Attribute_Is_On_Class_But_AllowAnonimous_On_Method");
+            var result = guardian.IsProtectedRoute("Attribute_Is_On_Class_But_AllowAnonimous_On_Method");
 
             // Assert
             result.Should().Be(false);
