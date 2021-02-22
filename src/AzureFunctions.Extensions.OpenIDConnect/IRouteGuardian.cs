@@ -1,9 +1,10 @@
-﻿namespace AzureFunctions.Extensions.OpenIDConnect
-{
-    using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 
+namespace AzureFunctions.Extensions.OpenIDConnect
+{
     public interface IRouteGuardian
     {
-        Task<bool> ShouldAuthorize(string functionName);
+        bool IsProtectedRoute(string functionName);
+        AuthorizeAttribute GetAuthorizationConfiguration(string functionName);
     }
 }

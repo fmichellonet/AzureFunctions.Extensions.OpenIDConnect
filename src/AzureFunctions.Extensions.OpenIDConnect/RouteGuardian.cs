@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.Azure.WebJobs;
 
@@ -43,7 +42,7 @@
                 var authorizeAttributeOnMethod = methodInfo.GetCustomAttributes<AuthorizeAttribute>().FirstOrDefault();
                 var anonymousAttributeOnMethod = methodInfo.GetCustomAttributes<AllowAnonymousAttribute>().FirstOrDefault();
                 
-                return new AzureFunctionInfo
+                return new
                 {
                     FunctionName = functionNameAttribute.Name,
                     AuthorizeAttribute = anonymousAttributeOnMethod != null ? null : authorizeAttributeOnMethod ?? authorizeAttributeOnType,
@@ -55,17 +54,14 @@
                                     .ToDictionary(x => x.FunctionName, x => x.AuthorizeAttribute);
         }
 
-        public Task<bool> ShouldAuthorize(string functionName)
+        public bool IsProtectedRoute(string functionName)
         {
-            return Task.FromResult(_routeProtection.ContainsKey(functionName));
+            return _routeProtection.ContainsKey(functionName);
         }
 
-        private class AzureFunctionInfo
+        public AuthorizeAttribute GetAuthorizationConfiguration(string functionName)
         {
-            public string FunctionName { get; set; }
-            public AuthorizeAttribute AuthorizeAttribute { get; set; }
-            public string Route { get; set; }
+            return _routeProtection[functionName];
         }
     }
-    
 }
