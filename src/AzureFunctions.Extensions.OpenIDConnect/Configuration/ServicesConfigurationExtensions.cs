@@ -32,7 +32,7 @@ namespace AzureFunctions.Extensions.OpenIDConnect.Configuration
 
             if (!builder.IsValid)
             {
-                throw new ArgumentException("Be sure to configure Token Validation and Configuration Manager");
+                throw new ArgumentException("Be sure to configure Token Validation and Configuration Manager (for example issuer url)");
             }
 
             // These are created as a singletons, so that only one instance of each
