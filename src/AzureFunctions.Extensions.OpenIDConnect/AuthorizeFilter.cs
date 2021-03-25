@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AzureFunctions.Extensions.OpenIDConnect
 {
@@ -64,12 +65,14 @@ namespace AzureFunctions.Extensions.OpenIDConnect
         {
             httpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
             await httpContext.Response.WriteAsync(string.Empty, cancellationToken);
+            throw new UnauthorizedAccessException();
         }
 
         private async Task Forbidden(HttpContext httpContext, AuthorizationFailure failure, CancellationToken cancellationToken)
         {
             httpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
             await httpContext.Response.WriteAsync(failure.FailedRequirements.ToString(), cancellationToken);
+            throw new UnauthorizedAccessException();
         }
     }
 }
