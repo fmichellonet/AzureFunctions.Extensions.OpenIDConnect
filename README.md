@@ -11,7 +11,7 @@ This library makes it easy to authenticate a user by validating a bearer token.
 
 ## Requirements
 
-Azure Functions using v3 runtime and of course an identity provider (e.g. Google, Azure AD, etc..)
+Azure Functions using v3 or V4 runtime and of course an identity provider (e.g. Google, Azure AD, etc..)
 
 ## How to use it
 
