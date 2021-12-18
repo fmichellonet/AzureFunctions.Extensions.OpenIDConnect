@@ -23,7 +23,7 @@ namespace AzureFunctions.Extensions.OpenIDConnect.Tests
 
             // Assert
             res.Requirements.Should().HaveCount(1);
-            res.Requirements.Should().BeEquivalentTo(claim);
+            res.Requirements.Should().BeEquivalentTo(new [] {claim});
         }
     }
 }
