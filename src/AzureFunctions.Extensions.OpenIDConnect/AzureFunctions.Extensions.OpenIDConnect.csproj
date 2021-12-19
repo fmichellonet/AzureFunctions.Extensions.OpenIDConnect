@@ -28,9 +28,6 @@ Works with popular identity providers including Auth0, Azure AD B2C, Azure AD, G
   </Target>
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Http" Version="3.0.12" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
-    <PackageReference Include="Microsoft.IdentityModel.Protocols" Version="6.15.0" />
     <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="6.15.0" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.15.0" />
   </ItemGroup>
 </Project>
