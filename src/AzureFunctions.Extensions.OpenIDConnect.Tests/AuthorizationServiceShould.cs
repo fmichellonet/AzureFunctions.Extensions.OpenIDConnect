@@ -24,8 +24,9 @@ namespace AzureFunctions.Extensions.OpenIDConnect.Tests
             // Arrange
             var policyName = "my policy";
             var localeClaim = new Claim(claimType, claimValue);
-             
-            var collection = ServiceCollectionFixture.MinimalAzFunctionsServices();
+
+            var collection = ServiceCollectionFixture.MinimalAzFunctionsServices()
+                            .WithClaimsAuthorizationHandler(claimType, new[] { claimRequiredValue });
 
             collection.AddOpenIDConnect(builder =>
             {
