@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NSubstitute;
+using System.Collections.Generic;
 
 namespace AzureFunctions.Extensions.OpenIDConnect.Tests
 {
@@ -22,6 +24,12 @@ namespace AzureFunctions.Extensions.OpenIDConnect.Tests
             var logger = Substitute.For<ILogger<DefaultAuthorizationService>>();
             collection.AddSingleton<ILogger<DefaultAuthorizationService>>(logger);
 
+            return collection;
+        }
+
+        public static ServiceCollection WithClaimsAuthorizationHandler(this ServiceCollection collection, string claimType, IEnumerable<string> allowedValues)
+        {
+            collection.AddSingleton<IAuthorizationHandler>(new ClaimsAuthorizationRequirement(claimType, allowedValues));
             return collection;
         }
     }

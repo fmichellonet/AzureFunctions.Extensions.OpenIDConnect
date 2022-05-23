@@ -50,6 +50,7 @@ namespace AzureFunctions.Extensions.OpenIDConnect.Configuration
             services.AddSingleton<IFunctionFilter, AuthorizeFilter>();
             services.AddSingleton<IAuthorizationService, DefaultAuthorizationService>();
             services.AddSingleton<IAuthorizationPolicyProvider, DefaultAuthorizationPolicyProvider>();
+            services.AddSingleton<IAuthorizationHandlerProvider, DefaultAuthorizationHandlerProvider>();
         }
     }
 }
