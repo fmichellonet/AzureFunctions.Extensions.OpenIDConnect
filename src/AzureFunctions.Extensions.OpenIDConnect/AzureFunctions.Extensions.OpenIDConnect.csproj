@@ -1,33 +1,54 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-      <PublisherName>Fabrice Michellonet</PublisherName>
-      <PackageId>AzureFunctions.Extensions.OpenIDConnect</PackageId>
-      <Version>1.0.0.0</Version>
-      <Copyright>Fabrice Michellonet 2021</Copyright>
-      <Title>Azure Functions OIDC Authentiction</Title>
-      <Description>OIDC / JWT Bearer Tokens authentication made easy for Azure Functions.
-Port of well known ASPNET [Authorize] attribute.
-Works with popular identity providers including Auth0, Azure AD B2C, Azure AD, Google and Okta.</Description>
-      <Authors>Fabrice Michellonet</Authors>
-      <RepositoryType>git</RepositoryType>
-      <RepositoryUrl>git://github.com/fmichellonet/AzureFunctions.Extensions.OpenIDConnect</RepositoryUrl>
-      <NuspecFile>$(MSBuildThisFileDirectory)$(MSBuildProjectName).nuspec</NuspecFile>
-      <PackageReleaseNotes></PackageReleaseNotes>
-  </PropertyGroup>
-  <Target Name="SetNuspecProperties" BeforeTargets="GenerateNuspec">
-    <PropertyGroup>
-      <NuspecProperties>$(NuspecProperties);id=$(AssemblyName)</NuspecProperties>
-      <NuspecProperties>$(NuspecProperties);config=$(Configuration)</NuspecProperties>
-      <NuspecProperties>$(NuspecProperties);version=$(PackageVersion)</NuspecProperties>
-      <NuspecProperties>$(NuspecProperties);description=$(Description)</NuspecProperties>
-      <NuspecProperties>$(NuspecProperties);authors=$(Authors)</NuspecProperties>
-      <NuspecProperties>$(NuspecProperties);releaseNotes=$(PackageReleaseNotes)</NuspecProperties>
-    </PropertyGroup>
-    <Message Importance="high" Text="NuspecProperties: $(NuspecProperties)" />
-  </Target>
-  <ItemGroup>
-	  <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Http" Version="3.2.0" />
-    <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="6.23.1" />
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<PublisherName>Fabrice Michellonet</PublisherName>
+		<PackageId>AzureFunctions.Extensions.OpenIDConnect</PackageId>
+		<Version>1.0.0.0</Version>
+		<Copyright>Fabrice Michellonet 2021</Copyright>
+		<Title>Azure Functions Authentication</Title>
+		<Description>
+			OIDC / JWT Bearer Tokens authentication made easy for Azure Functions.
+			This is a base package, in your project please use AzureFunctions.Extensions.OpenIDConnect.InProcess or AzureFunctions.Extensions.OpenIDConnect.Isolated
+		</Description>
+		<Authors>Fabrice Michellonet</Authors>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>git://github.com/fmichellonet/AzureFunctions.Extensions.OpenIDConnect</RepositoryUrl>
+		<PackageReleaseNotes></PackageReleaseNotes>
+		<Copyright>Fabrice Michellonet 2021</Copyright>
+		<PackageProjectUrl>https://github.com/fmichellonet/AzureFunctions.Extensions.OpenIDConnect</PackageProjectUrl>
+		<PackageIcon>icon.png</PackageIcon>
+		<PackageTags>Azure Functions;Token Validation;JWT;OIDC;Auth0;Azure AD B2C;Azure AD;Okta;Google</PackageTags>
+
+		<!-- Optional: Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+
+		<!-- Optional: Embed source files that are not tracked by the source control manager in the PDB -->
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+
+		<!-- Optional: Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
+	</PropertyGroup>
+	<Target Name="SetNuspecProperties" BeforeTargets="GenerateNuspec">
+		<PropertyGroup>
+			<NuspecProperties>$(NuspecProperties);id=$(AssemblyName)</NuspecProperties>
+			<NuspecProperties>$(NuspecProperties);config=$(Configuration)</NuspecProperties>
+			<NuspecProperties>$(NuspecProperties);version=$(PackageVersion)</NuspecProperties>
+			<NuspecProperties>$(NuspecProperties);description=$(Description)</NuspecProperties>
+			<NuspecProperties>$(NuspecProperties);authors=$(Authors)</NuspecProperties>
+			<NuspecProperties>$(NuspecProperties);releaseNotes=$(PackageReleaseNotes)</NuspecProperties>
+		</PropertyGroup>
+		<Message Importance="high" Text="NuspecProperties: $(NuspecProperties)" />
+	</Target>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Http" Version="3.2.0" />
+		<PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="6.23.1" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Update="icon.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
 </Project>

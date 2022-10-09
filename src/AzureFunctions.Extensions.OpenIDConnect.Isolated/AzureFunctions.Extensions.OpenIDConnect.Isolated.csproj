@@ -1,17 +1,50 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<PublisherName>Fabrice Michellonet</PublisherName>
+		<PackageId>AzureFunctions.Extensions.OpenIDConnect.Isolated</PackageId>
+		<Version>1.0.0.0</Version>
+		<Copyright>Fabrice Michellonet 2021</Copyright>
+		<Title>Isolated worker Azure Functions Authentication</Title>
+		<Description>
+			OIDC / JWT Bearer Tokens authentication made easy for isolated worker Azure Functions.
+			Works with the well known ASPNET [Authorize] attribute.
+			Works with popular identity providers including Auth0, Azure AD B2C, Azure AD, Google and Okta.
+		</Description>
+		<Authors>Fabrice Michellonet</Authors>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>git://github.com/fmichellonet/AzureFunctions.Extensions.OpenIDConnect</RepositoryUrl>
+		<PackageReleaseNotes></PackageReleaseNotes>
+		<PackageProjectUrl>https://github.com/fmichellonet/AzureFunctions.Extensions.OpenIDConnect</PackageProjectUrl>
+		<PackageIcon>icon.png</PackageIcon>
+		<PackageTags>Azure Functions;Token Validation;JWT;OIDC;Auth0;Azure AD B2C;Azure AD;Okta;Google</PackageTags>
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-  </PropertyGroup>
+		<!-- Optional: Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Functions.Worker.Core" Version="1.8.0" />
-    <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Abstractions" Version="1.1.0" />
-    <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Http" Version="3.0.13" />
-  </ItemGroup>
+		<!-- Optional: Embed source files that are not tracked by the source control manager in the PDB -->
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 
-  <ItemGroup>
-    <ProjectReference Include="..\AzureFunctions.Extensions.OpenIDConnect\AzureFunctions.Extensions.OpenIDConnect.csproj" />
-  </ItemGroup>
-	
+		<!-- Optional: Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\AzureFunctions.Extensions.OpenIDConnect\icon.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Azure.Functions.Worker.Core" Version="1.8.0" />
+		<PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Abstractions" Version="1.1.0" />
+		<PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Http" Version="3.0.13" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\AzureFunctions.Extensions.OpenIDConnect\AzureFunctions.Extensions.OpenIDConnect.csproj" />
+	</ItemGroup>
+
 </Project>
