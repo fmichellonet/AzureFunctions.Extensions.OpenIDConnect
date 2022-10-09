@@ -26,7 +26,6 @@ namespace AzureFunctions.Extensions.OpenIDConnect.Isolated.Tests
 
             provider.GetService<IAuthenticationService>().Should().NotBe(null);
             provider.GetService<IRouteGuardian>().Should().NotBe(null);
-            provider.GetService<IFunctionFilter>().Should().NotBe(null);
         }
     }
 }
