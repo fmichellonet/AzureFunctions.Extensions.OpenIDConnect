@@ -18,10 +18,24 @@ jobs:
     - name: Create NuGet Package
       run: dotnet pack -c Release /p:Version=${{ github.event.release.tag_name }} /p:PackageReleaseNotes="See https://github.com/fmichellonet/AzureFunctions.Extensions.OpenIDConnect/releases/tag/${{ github.event.release.tag_name }}"
       working-directory: .\src
-    - name: Archive NuGet Package
+    - name: Archive OpenIDConnect NuGet Package
       uses: actions/upload-artifact@v1
       with:
         name: AzureFunctions.Extensions.OpenIDConnect.${{ github.event.release.tag_name }}.nupkg
         path: .\src\AzureFunctions.Extensions.OpenIDConnect\bin\Release\AzureFunctions.Extensions.OpenIDConnect.${{ github.event.release.tag_name }}.nupkg
-    - name: Publish to Nuget.org
+    - name: Publish OpenIDConnect to Nuget.org
       run: dotnet nuget push .\src\AzureFunctions.Extensions.OpenIDConnect\bin\Release\AzureFunctions.Extensions.OpenIDConnect.${{ github.event.release.tag_name }}.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+    - name: Archive OpenIDConnect.InProcess NuGet Package
+      uses: actions/upload-artifact@v1
+      with:
+        name: AzureFunctions.Extensions.OpenIDConnect.InProcess.${{ github.event.release.tag_name }}.nupkg
+        path: .\src\AzureFunctions.Extensions.OpenIDConnect.InProcess\bin\Release\AzureFunctions.Extensions.OpenIDConnect.InProcess.${{ github.event.release.tag_name }}.nupkg
+    - name: Publish OpenIDConnect.InProcess to Nuget.org
+      run: dotnet nuget push .\src\AzureFunctions.Extensions.OpenIDConnect.InProcess\bin\Release\AzureFunctions.Extensions.OpenIDConnect.InProcess.${{ github.event.release.tag_name }}.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+    - name: Archive OpenIDConnect.Isolated NuGet Package
+      uses: actions/upload-artifact@v1
+      with:
+        name: AzureFunctions.Extensions.OpenIDConnect.Isolated.${{ github.event.release.tag_name }}.nupkg
+        path: .\src\AzureFunctions.Extensions.OpenIDConnect.Isolated\bin\Release\AzureFunctions.Extensions.OpenIDConnect.Isolated.${{ github.event.release.tag_name }}.nupkg
+    - name: Publish OpenIDConnect.Isolated to Nuget.org
+      run: dotnet nuget push .\src\AzureFunctions.Extensions.OpenIDConnect.Isolated\bin\Release\AzureFunctions.Extensions.OpenIDConnect.Isolated.${{ github.event.release.tag_name }}.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json

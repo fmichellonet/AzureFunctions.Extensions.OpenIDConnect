@@ -1,14 +1,13 @@
 ﻿using System;
+using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Azure.WebJobs.Host;
 
-namespace AzureFunctions.Extensions.OpenIDConnect
+namespace AzureFunctions.Extensions.OpenIDConnect.InProcess
 {
-    using System.Net;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.Azure.WebJobs.Host;
-
     public class AuthorizeFilter : FunctionInvocationFilterAttribute
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -54,6 +53,7 @@ namespace AzureFunctions.Extensions.OpenIDConnect
                     if (!authorizationResult.Succeeded)
                     {
                         await Forbidden(httpContext, authorizationResult.Failure, cancellationToken);
+                        return;
                     }
                 }
                 

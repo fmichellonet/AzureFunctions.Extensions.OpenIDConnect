@@ -1,11 +1,12 @@
-﻿namespace AzureFunctions.Extensions.OpenIDConnect.Tests
-{
-    using Configuration;
-    using FluentAssertions;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.IdentityModel.Tokens;
-    using NUnit.Framework;
+﻿using AzureFunctions.Extensions.OpenIDConnect.Isolated.Configuration;
+using AzureFunctions.Extensions.OpenIDConnect.Tests;
+using FluentAssertions;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using NUnit.Framework;
 
+namespace AzureFunctions.Extensions.OpenIDConnect.Isolated.Tests
+{
     public class TokenValidationShould
     {
         [Test]
@@ -40,7 +41,7 @@
 
             // Act
             var tokenValidationParameters = provider.GetService<TokenValidationParameters>();
-            
+
             // Assert
             tokenValidationParameters.Should().BeEquivalentTo(expected);
         }

@@ -15,9 +15,14 @@ Azure Functions using v3 or V4 runtime and of course an identity provider (e.g. 
 
 ## How to use it
 
-Add AzureFunctions.Extensions.OpenIDConnect NuGet package to your Azure Functions project.
+AzureFunctions.Extensions.OpenIDConnect support [In-Process and Isolated](https://learn.microsoft.com/en-us/azure/azure-functions/dotnet-isolated-process-guide#differences-with-net-class-library-functions) azure functions hosting
+and brings the same features set. Be sure to use the nuget package according to your hosting choice.
 
-> dotnet package install AzureFunctions.Extensions.OpenIDConnect
+### In process
+
+Add AzureFunctions.Extensions.OpenIDConnect.InProcess NuGet package to your Azure Functions project.
+
+> dotnet package install AzureFunctions.Extensions.OpenIDConnect.InProcess
 
 Now head over the Configure method of the Startup class, add configure OpenID-Connect the way you like it.
 
@@ -41,7 +46,44 @@ namespace MySecuredApp
 }
 ```
 
-### Securing an Azure Function
+### Isolated
+
+Add AzureFunctions.Extensions.OpenIDConnect.Isolated NuGet package to your Azure Functions project.
+
+> dotnet package install AzureFunctions.Extensions.OpenIDConnect.Isolated
+
+Now head over your entrypoint class, add configure the host like this :
+
+```csharp
+static class Program
+{
+    private static async Task Main(string[] args)
+    {
+        var host = new HostBuilder()
+            .ConfigureFunctionsWorkerDefaults((context, builder) =>
+            {
+                builder.UseAuthorization();
+            })
+            .ConfigureServices((context, services) =>
+            {
+                services.AddOpenIDConnect(config =>
+                {
+                    var audience = Environment.GetEnvironmentVariable("OpenIdConnect_Audience");
+                    var issuer = Environment.GetEnvironmentVariable("OpenIdConnect_Issuer");
+                    var issuerUrl = Environment.GetEnvironmentVariable("OpenIdConnect_IssuerUrl");
+
+                    config.SetTokenValidation(TokenValidationParametersHelpers.Default(audience, issuer));
+                    config.SetIssuerBaseUrlConfiguration(issuerUrl);
+                });
+            })
+            .Build();
+        
+        await host.RunAsync();
+    }
+}
+```
+
+## Securing an Azure Function
 Now that everything is configured, you can decorate your http-triggered functions with the well known [Authorize](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authorization.authorizeattribute?view=aspnetcore-3.1) attribute as follows:
 
 ```csharp
