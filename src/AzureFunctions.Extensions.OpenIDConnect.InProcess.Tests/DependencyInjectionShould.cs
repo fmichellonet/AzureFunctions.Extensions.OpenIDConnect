@@ -1,11 +1,12 @@
 ﻿using System;
-using AzureFunctions.Extensions.OpenIDConnect.Configuration;
+using AzureFunctions.Extensions.OpenIDConnect.InProcess.Configuration;
+using AzureFunctions.Extensions.OpenIDConnect.Tests;
 using FluentAssertions;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
-namespace AzureFunctions.Extensions.OpenIDConnect.Tests
+namespace AzureFunctions.Extensions.OpenIDConnect.InProcess.Tests
 {
     [TestFixture]
     public class DependencyInjectionShould

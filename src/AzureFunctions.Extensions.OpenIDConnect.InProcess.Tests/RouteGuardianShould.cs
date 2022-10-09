@@ -7,7 +7,7 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
-namespace AzureFunctions.Extensions.OpenIDConnect.Tests
+namespace AzureFunctions.Extensions.OpenIDConnect.InProcess.Tests
 {
     using System;
     using System.Collections.Generic;
@@ -19,7 +19,7 @@ namespace AzureFunctions.Extensions.OpenIDConnect.Tests
         public void Not_Authorize_When_Not_HttpTrigger()
         {
             // Arrange
-            var guardian = new RouteGuardian(() => new List<Type>{ typeof(Not_HttpTrigger) });
+            var guardian = new RouteGuardian(() => new List<Type> { typeof(Not_HttpTrigger) }, new FunctionsAnalyzer());
 
             // Act
             var result = guardian.IsProtectedRoute("Not_HttpTrigger");
@@ -32,7 +32,7 @@ namespace AzureFunctions.Extensions.OpenIDConnect.Tests
         public void Not_Authorize_When_No_Authorize_Attribute_On_Method_And_Type()
         {
             // Arrange
-            var guardian = new RouteGuardian(() => new List<Type> { typeof(No_Authorize_Attribute_On_Method_And_Type) });
+            var guardian = new RouteGuardian(() => new List<Type> { typeof(No_Authorize_Attribute_On_Method_And_Type) }, new FunctionsAnalyzer());
 
             // Act
             var result = guardian.IsProtectedRoute("No_Authorize_Attribute_On_Method_And_Type");
@@ -45,7 +45,7 @@ namespace AzureFunctions.Extensions.OpenIDConnect.Tests
         public void Authorize_When_Authorize_Attribute_Is_On_Method()
         {
             // Arrange
-            var guardian = new RouteGuardian(() => new List<Type> { typeof(Authorize_Attribute_Is_On_Method) });
+            var guardian = new RouteGuardian(() => new List<Type> { typeof(Authorize_Attribute_Is_On_Method) }, new FunctionsAnalyzer());
 
             // Act
             var result = guardian.IsProtectedRoute("Authorize_Attribute_Is_On_Method");
@@ -58,7 +58,7 @@ namespace AzureFunctions.Extensions.OpenIDConnect.Tests
         public void Authorize_When_Authorize_Attribute_Is_On_Class()
         {
             // Arrange
-            var guardian = new RouteGuardian(() => new List<Type> { typeof(Authorize_Attribute_Is_On_Class) });
+            var guardian = new RouteGuardian(() => new List<Type> { typeof(Authorize_Attribute_Is_On_Class) }, new FunctionsAnalyzer());
 
             // Act
             var result = guardian.IsProtectedRoute("Authorize_Attribute_Is_On_Class");
@@ -71,7 +71,7 @@ namespace AzureFunctions.Extensions.OpenIDConnect.Tests
         public void NotAuthorize_When_Authorize_Attribute_Is_On_Class_But_AllowAnonimous_On_Method()
         {
             // Arrange
-            var guardian = new RouteGuardian(() => new List<Type> { typeof(Attribute_Is_On_Class_But_AllowAnonimous_On_Method) });
+            var guardian = new RouteGuardian(() => new List<Type> { typeof(Attribute_Is_On_Class_But_AllowAnonimous_On_Method) }, new FunctionsAnalyzer());
 
             // Act
             var result = guardian.IsProtectedRoute("Attribute_Is_On_Class_But_AllowAnonimous_On_Method");

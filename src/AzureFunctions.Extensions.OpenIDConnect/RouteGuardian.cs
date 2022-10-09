@@ -5,8 +5,6 @@
     using System.Linq;
     using System.Reflection;
     using Microsoft.AspNetCore.Authorization;
-    using Microsoft.Azure.WebJobs;
-
 
     public delegate IEnumerable<Type> FunctionTypeCrawler();
 
@@ -14,7 +12,7 @@
     {
         private readonly Dictionary<string, AuthorizeAttribute> _routeProtection;
 
-        public static Func<IEnumerable<Type>> AppDomainTypeCrawler = () =>
+        public static readonly Func<IEnumerable<Type>> AppDomainTypeCrawler = () =>
         {
             return AppDomain.CurrentDomain
                             .GetAssemblies()
@@ -22,31 +20,23 @@
                             .SelectMany(x => x.GetTypes());
         };
 
-        public RouteGuardian(FunctionTypeCrawler typeCrawler)
+        public RouteGuardian(FunctionTypeCrawler typeCrawler, IFunctionsAnalyzer functionsAnalyzer)
         {
-            bool IsAzureFunction(MethodInfo methodInfo) => methodInfo.GetCustomAttributes<FunctionNameAttribute>().Any();
-            bool IsHttpTrigger(MethodInfo methodInfo) => methodInfo.GetParameters().Any(paramInfo => paramInfo.GetCustomAttributes<HttpTriggerAttribute>().Any());
-
             var httpTriggerMethods = typeCrawler().SelectMany(type => type.GetMethods())
-                .Where(methodInfo => methodInfo.IsPublic && IsAzureFunction(methodInfo) && IsHttpTrigger(methodInfo));
+                .Where(methodInfo => methodInfo.IsPublic && functionsAnalyzer.IsAzureFunction(methodInfo) && functionsAnalyzer.IsHttpTrigger(methodInfo));
 
             var infos = httpTriggerMethods.Select(methodInfo =>
             {
-                var httpTriggerAttribute = methodInfo.GetParameters()
-                                                     .SelectMany(paramInfo => paramInfo.GetCustomAttributes<HttpTriggerAttribute>())
-                                                     .First();
-
-                var functionNameAttribute = methodInfo.GetCustomAttributes<FunctionNameAttribute>().First();
-
+                
                 var authorizeAttributeOnType = methodInfo.DeclaringType?.GetCustomAttributes<AuthorizeAttribute>().FirstOrDefault();
                 var authorizeAttributeOnMethod = methodInfo.GetCustomAttributes<AuthorizeAttribute>().FirstOrDefault();
                 var anonymousAttributeOnMethod = methodInfo.GetCustomAttributes<AllowAnonymousAttribute>().FirstOrDefault();
                 
                 return new
                 {
-                    FunctionName = functionNameAttribute.Name,
+                    FunctionName = functionsAnalyzer.GetFunctionName(methodInfo),
                     AuthorizeAttribute = anonymousAttributeOnMethod != null ? null : authorizeAttributeOnMethod ?? authorizeAttributeOnType,
-                    Route = httpTriggerAttribute.Route
+                    Route = functionsAnalyzer.GetRoute(methodInfo)
                 };
             });
 

@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AzureFunctions.Extensions.OpenIDConnect.InProcess\AzureFunctions.Extensions.OpenIDConnect.InProcess.csproj" />
+    <ProjectReference Include="..\AzureFunctions.Extensions.OpenIDConnect.Tests\AzureFunctions.Extensions.OpenIDConnect.Tests.csproj" />
   </ItemGroup>
 
 </Project>

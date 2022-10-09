@@ -1,14 +1,16 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System;
+using System.Runtime.CompilerServices;
+using Microsoft.Azure.WebJobs.Host;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authorization;
 
+[assembly: InternalsVisibleToAttribute("AzureFunctions.Extensions.OpenIDConnect.Isolated")]
+[assembly: InternalsVisibleToAttribute("AzureFunctions.Extensions.OpenIDConnect.InProcess")]
 namespace AzureFunctions.Extensions.OpenIDConnect.Configuration
 {
-    using System;
-    using Microsoft.Azure.WebJobs.Host;
-    using Microsoft.Extensions.DependencyInjection;
-
-    public static class ServicesConfigurationExtensions
+    internal static class ServicesConfigurationExtensionsBase
     {
-        public static void AddOpenIDConnect(this IServiceCollection services, string issuer, string audience)
+        internal static void AddOpenIDConnect(this IServiceCollection services, string issuer, string audience)
         {
             Action<ConfigurationBuilder> configurator = builder =>
             {
@@ -20,7 +22,7 @@ namespace AzureFunctions.Extensions.OpenIDConnect.Configuration
             AddOpenIDConnect(services, configurator);
         }
 
-        public static void AddOpenIDConnect(this IServiceCollection services, Action<ConfigurationBuilder> configurator)
+        internal static void AddOpenIDConnect(this IServiceCollection services, Action<ConfigurationBuilder> configurator)
         {
             if (configurator == null)
             {
@@ -41,13 +43,14 @@ namespace AzureFunctions.Extensions.OpenIDConnect.Configuration
             // for the signing keys and other stuff that can be used across multiple
             // calls to the HTTP triggered Azure Functions.
 
-            services.AddHttpContextAccessor();
+            
             services.AddSingleton<IAuthorizationHeaderBearerTokenExtractor, AuthorizationHeaderBearerTokenExtractor>();
             services.AddSingleton<IJwtSecurityTokenHandlerWrapper, JwtSecurityTokenHandlerWrapper>();
             services.AddSingleton<IOpenIdConnectConfigurationManager, OpenIdConnectConfigurationManager>();
             services.AddSingleton<IAuthenticationService, AuthenticationService>();
             services.AddSingleton<IRouteGuardian, RouteGuardian>();
-            services.AddSingleton<IFunctionFilter, AuthorizeFilter>();
+            
+            services.AddHttpContextAccessor();
             services.AddSingleton<IAuthorizationService, DefaultAuthorizationService>();
             services.AddSingleton<IAuthorizationPolicyProvider, DefaultAuthorizationPolicyProvider>();
             services.AddSingleton<IAuthorizationHandlerProvider, DefaultAuthorizationHandlerProvider>();

@@ -1,11 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30907.101
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureFunctions.Extensions.OpenIDConnect", "AzureFunctions.Extensions.OpenIDConnect\AzureFunctions.Extensions.OpenIDConnect.csproj", "{72379104-48F7-4A31-9946-C36C573D4563}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureFunctions.Extensions.OpenIDConnect.Tests", "AzureFunctions.Extensions.OpenIDConnect.Tests\AzureFunctions.Extensions.OpenIDConnect.Tests.csproj", "{09F7B354-FEB9-4A08-8292-234ACD7C679C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureFunctions.Extensions.OpenIDConnect.InProcess.Tests", "AzureFunctions.Extensions.OpenIDConnect.InProcess.Tests\AzureFunctions.Extensions.OpenIDConnect.InProcess.Tests.csproj", "{09F7B354-FEB9-4A08-8292-234ACD7C679C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{65695F07-E33C-41BE-A0A0-58547D68C870}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Isolated-Net6", "Samples\Isolated-Net6\Isolated-Net6.csproj", "{8686079E-24F0-42BD-8FD3-36ED25DA4F65}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureFunctions.Extensions.OpenIDConnect.Isolated", "AzureFunctions.Extensions.OpenIDConnect.Isolated\AzureFunctions.Extensions.OpenIDConnect.Isolated.csproj", "{F9FF89B8-A964-475F-B585-8896EFF49451}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureFunctions.Extensions.OpenIDConnect.InProcess", "AzureFunctions.Extensions.OpenIDConnect.InProcess\AzureFunctions.Extensions.OpenIDConnect.InProcess.csproj", "{8CAC1053-4386-41B8-8324-0E2ED3DE7C8C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureFunctions.Extensions.OpenIDConnect.Isolated.Tests", "AzureFunctions.Extensions.OpenIDConnect.Isolated.Tests\AzureFunctions.Extensions.OpenIDConnect.Isolated.Tests.csproj", "{49CC9086-8E99-4DD3-969F-23D101188BDA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureFunctions.Extensions.OpenIDConnect.Tests", "AzureFunctions.Extensions.OpenIDConnect.Tests\AzureFunctions.Extensions.OpenIDConnect.Tests.csproj", "{A6DC2862-5D7F-4C47-A7B3-F04336CADAFA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InProcess-Net6", "Samples\InProcess-Net6\InProcess-Net6.csproj", "{1238133C-18D8-4804-9CD5-0CF4D12B2383}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +35,37 @@ Global
 		{09F7B354-FEB9-4A08-8292-234ACD7C679C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09F7B354-FEB9-4A08-8292-234ACD7C679C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09F7B354-FEB9-4A08-8292-234ACD7C679C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8686079E-24F0-42BD-8FD3-36ED25DA4F65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8686079E-24F0-42BD-8FD3-36ED25DA4F65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8686079E-24F0-42BD-8FD3-36ED25DA4F65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8686079E-24F0-42BD-8FD3-36ED25DA4F65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9FF89B8-A964-475F-B585-8896EFF49451}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9FF89B8-A964-475F-B585-8896EFF49451}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9FF89B8-A964-475F-B585-8896EFF49451}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9FF89B8-A964-475F-B585-8896EFF49451}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CAC1053-4386-41B8-8324-0E2ED3DE7C8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CAC1053-4386-41B8-8324-0E2ED3DE7C8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CAC1053-4386-41B8-8324-0E2ED3DE7C8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CAC1053-4386-41B8-8324-0E2ED3DE7C8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49CC9086-8E99-4DD3-969F-23D101188BDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49CC9086-8E99-4DD3-969F-23D101188BDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49CC9086-8E99-4DD3-969F-23D101188BDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49CC9086-8E99-4DD3-969F-23D101188BDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6DC2862-5D7F-4C47-A7B3-F04336CADAFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6DC2862-5D7F-4C47-A7B3-F04336CADAFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6DC2862-5D7F-4C47-A7B3-F04336CADAFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6DC2862-5D7F-4C47-A7B3-F04336CADAFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1238133C-18D8-4804-9CD5-0CF4D12B2383}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1238133C-18D8-4804-9CD5-0CF4D12B2383}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1238133C-18D8-4804-9CD5-0CF4D12B2383}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1238133C-18D8-4804-9CD5-0CF4D12B2383}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8686079E-24F0-42BD-8FD3-36ED25DA4F65} = {65695F07-E33C-41BE-A0A0-58547D68C870}
+		{1238133C-18D8-4804-9CD5-0CF4D12B2383} = {65695F07-E33C-41BE-A0A0-58547D68C870}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {83505560-D060-47AF-8930-6B9AD57DA084}
