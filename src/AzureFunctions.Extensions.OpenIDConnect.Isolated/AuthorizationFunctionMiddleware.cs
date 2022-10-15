@@ -49,7 +49,9 @@ namespace AzureFunctions.Extensions.OpenIDConnect.Isolated
                     Unauthorized(functionContextAccessor, requestData);
                     return;
                 }
-            
+
+                executingContext.Items.Add(HttpRequestDataExtensions.UserKey, authenticationResult.User);
+
                 var attribute = _routeGuardian.GetAuthorizationConfiguration(executingContext.FunctionDefinition.Name);
                 var requirements = _requirementsRetriever.ForAttribute(attribute);
 
