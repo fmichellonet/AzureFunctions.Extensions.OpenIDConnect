@@ -35,6 +35,11 @@ namespace AzureFunctions.Extensions.OpenIDConnect.Configuration
             SetTokenValidation(TokenValidationParametersHelpers.Default(audience, issuer));
         }
 
+        public void SetTokenValidation(IEnumerable<string> audiences, string issuer)
+        {
+            SetTokenValidation(TokenValidationParametersHelpers.Default(audiences, issuer));
+        }
+
         public void SetTokenValidation(TokenValidationParameters settings)
         {
             _services.AddSingleton(settings);
