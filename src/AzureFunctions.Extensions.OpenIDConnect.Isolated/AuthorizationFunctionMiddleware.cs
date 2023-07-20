@@ -57,7 +57,7 @@ namespace AzureFunctions.Extensions.OpenIDConnect.Isolated
 
                 if (requirements != null)
                 {
-                    var authorizationResult = await _authorizationService.AuthorizeAsync(authenticationResult.User, null, requirements);
+                    var authorizationResult = await _authorizationService.AuthorizeAsync(authenticationResult.User, executingContext, requirements);
                     if (!authorizationResult.Succeeded)
                     {
                         Forbidden(functionContextAccessor, requestData, authorizationResult.Failure);
