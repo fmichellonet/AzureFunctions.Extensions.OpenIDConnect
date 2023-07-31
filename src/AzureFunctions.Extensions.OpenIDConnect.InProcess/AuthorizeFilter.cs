@@ -49,7 +49,7 @@ namespace AzureFunctions.Extensions.OpenIDConnect.InProcess
 
                 if (requirements != null)
                 {
-                    var authorizationResult = await _authorizationService.AuthorizeAsync(httpContext.User, null, requirements);
+                    var authorizationResult = await _authorizationService.AuthorizeAsync(httpContext.User, executingContext, requirements);
                     if (!authorizationResult.Succeeded)
                     {
                         await Forbidden(httpContext, authorizationResult.Failure, cancellationToken);

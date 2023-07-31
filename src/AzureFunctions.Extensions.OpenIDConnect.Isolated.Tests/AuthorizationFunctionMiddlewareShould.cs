@@ -95,10 +95,10 @@ public class AuthorizationFunctionMiddlewareShould
             .Returns(requirements);
 
         var authorizationService = Substitute.For<IAuthorizationService>();
-        authorizationService.AuthorizeAsync(Arg.Any<ClaimsPrincipal>(), Arg.Any<object>(), requirements)
-            .Returns(AuthorizationResult.Failed());
-
         var context = Substitute.For<FunctionContext>();
+
+        authorizationService.AuthorizeAsync(Arg.Any<ClaimsPrincipal>(), context, requirements)
+            .Returns(AuthorizationResult.Failed());
 
         var functionContextAccessor = Substitute.For<IHttpFunctionContextAccessor>();
         functionContextAccessor.GetHttpRequestDataAsync()
